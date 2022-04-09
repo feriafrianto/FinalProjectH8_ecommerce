@@ -28,3 +28,5 @@ Route::get('/home', function() {
 })->name('home')->middleware('auth');
 Route::resource('category', \App\Http\Controllers\CategoryController::class)
     ->middleware('auth');
+Route::resource('subcategory', \App\Http\Controllers\SubCategoryController::class)
+    ->middleware('auth');

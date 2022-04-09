@@ -46,7 +46,7 @@ class CategoryController extends Controller
         ]);
         $category = Category::create($array);
         return redirect()->route('category.index')
-            ->with('success_message', 'Berhasil menambah user baru');
+            ->with('success_message', 'Berhasil menambah category baru');
     }
 
     /**
