@@ -30,3 +30,5 @@ Route::resource('category', \App\Http\Controllers\CategoryController::class)
     ->middleware('auth');
 Route::resource('subcategory', \App\Http\Controllers\SubCategoryController::class)
     ->middleware('auth');
+Route::resource('product', \App\Http\Controllers\ProductController::class)
+    ->middleware('auth');
