@@ -12,4 +12,7 @@ class Product extends Model
     public function subcategory(){
         return $this->belongsTo('App\Models\SubCategory','sub_category_id');
     }
+    public function cart() {
+    	return $this->hasOne(Cart::class);
+    }
 }

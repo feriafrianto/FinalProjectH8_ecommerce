@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Models\Transaction;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -23,6 +27,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $produk = Product::all();
+        $productcount = $produk->count();
+        $transaction = Transaction::all();
+        $transactioncount = $transaction->count();
+        $user = User::all();
+        $usercount = $user->count();
+        $total = DB::table('transactions')->sum('total');
+        return view('home',compact("productcount","transactioncount","usercount","total"));
     }
 }

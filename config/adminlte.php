@@ -227,25 +227,15 @@ return [
     'menu' => [
         // Navbar items:
         [
-            'type'         => 'navbar-search',
-            'text'         => 'search',
-            'topnav_right' => true,
-        ],
-        [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
         ],
-
+        [
+            'text' => 'Dashboard',
+            'url'  => '/home',
+            'icon'  => 'fa fa-home',
+        ],
         // Sidebar items:
-        [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
-        ],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
         ['header' => 'Manajemen Produk'],
         [
             'text' => 'Kategori',
@@ -260,6 +250,11 @@ return [
         [
             'text' => 'Product',
             'url'  => '/product',
+            'icon'  => 'fa fa-database',
+        ],
+        [
+            'text' => 'Transaksi',
+            'url'  => '/transaction',
             'icon'  => 'fa fa-database',
         ],
     ],

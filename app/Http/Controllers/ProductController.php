@@ -70,25 +70,20 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        $sub_categories = \DB::table('sub_categories')
+         ->select('id','name')
+         ->orderby('id')
+         ->get();
+        $products = Product::find($id);
+        // dd($products);
+        return view('product.edit',compact('products','sub_categories'));
     }
 
     /**
@@ -98,9 +93,37 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+
+        if($request->image != ''){        
+            $path = public_path().'/images/';
+  
+            //code for remove old file
+            if($product->image != ''  && $product->image != null){
+                $file_old = $path.$product->image;
+                unlink($file_old);
+            }
+  
+            //upload new file
+            $file = $request->image;
+            $filename = $file->getClientOriginalName();
+            $file->move($path, $filename);
+  
+            //for update in table
+            $product->image = $filename;
+       }
+       $product->name = $request->name;
+       $product->description = $request->description;
+       $product->status = $request->status;
+       $product->price = $request->price;
+       $product->weight = $request->weight;
+       $product->sub_category_id = $request->sub_category_id;
+       $product->save();
+
+       return redirect()->route('product.index')
+            ->with('success_message', 'Berhasil mengubah product');
     }
 
     /**
@@ -109,8 +132,15 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        $path = public_path().'/images/';
+        if($product->image != ''  && $product->image != null){
+            $file_old = $path.$product->image;
+            unlink($file_old);
+        }
+        if ($product) $product->delete();
+        return redirect()->route('product.index');
     }
 }

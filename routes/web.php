@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController ;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,16 +20,19 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
-Route::get('/home', function() {
-    return view('home');
-})->name('home')->middleware('auth');
 Route::resource('category', \App\Http\Controllers\CategoryController::class)
     ->middleware('auth');
 Route::resource('subcategory', \App\Http\Controllers\SubCategoryController::class)
     ->middleware('auth');
 Route::resource('product', \App\Http\Controllers\ProductController::class)
     ->middleware('auth');
+Route::resource('transaction', \App\Http\Controllers\TransactionController::class)
+    ->middleware('auth');
+Route::resource('cart', \App\Http\Controllers\CartController::class)
+    ->middleware('auth');
+Route::get('/export', [App\Http\Controllers\TransactionController::class, 'export'])->name('transaction.export');
+
